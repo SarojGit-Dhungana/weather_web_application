@@ -1,21 +1,52 @@
 "use client";
 import React, { useState } from "react";
-import { weatherAPI } from "@/fake-data/fake_weather_data";
 import Link from "next/link";
-import { LocationSearching } from "@mui/icons-material";
 import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
+
 export default function HomeContent() {
   const [search, setSearch] = useState("");
-  const FilteredData = weatherAPI
-    .filter((item) => {
-      const query = search.trim().toLowerCase();
-      return (
-        item.city.toLowerCase().includes(query) ||
-        item.country.toLowerCase().includes(query) ||
-        item.condition.toLowerCase().includes(query)
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchWeather = async () => {
+    if (!search) return;
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        `http://api.weatherapi.com/v1/search.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${search}`,
       );
-    })
-    .sort((a, b) => a.city.localeCompare(b.city));
+
+      const cities = await res.json();
+      const topCities = cities.slice(0, 10);
+      const weatherResults = await Promise.all(
+        topCities.map(async (city, index) => {
+          const weatherRes = await fetch(
+            `http://api.weatherapi.com/v1/current.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${city.name}`,
+          );
+
+          const weatherData = await weatherRes.json();
+
+          return {
+            id: index,
+            city: city.name,
+            country: city.country,
+            temp: weatherData.current?.temp_c || "N/A",
+            condition: weatherData.current?.condition?.text || "",
+          };
+        }),
+      );
+
+      setResults(weatherResults);
+    } catch (err) {
+      console.error(err);
+      alert("Error fetching weather");
+    }
+
+    setLoading(false);
+  };
+
   const cards = [
     {
       title: "Real-time Weather",
@@ -30,53 +61,56 @@ export default function HomeContent() {
       desc: "Visualize weather patterns on the map.",
     },
   ];
+
   return (
     <div className="flex flex-col items-center h-full text-center px-6 w-full">
-      <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-lienar-to-r from-purple-400 to-pink-500 bg-clip-text text-gray-100">
+      <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-100">
         Weather App
       </h1>
+
       <p className="text-gray-300 max-w-xl mb-10">
-        Get real-time weather updates, forecasts, and map insights for any city
-        around the world.
+        Get real-time weather updates, forecasts, and insights.
       </p>
 
+      {/* SEARCH */}
       <div className="w-3xl rounded-t-2xl bg-white/10 backdrop-blur-lg p-2 flex items-center shadow-lg">
         <input
           type="text"
-          placeholder="Search city or country..."
+          placeholder="Search city..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 bg-transparent outline-none px-3 text-white placeholder-gray-300"
+          className="flex-1 bg-transparent outline-none px-3 text-white"
         />
-        <button className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition hover:scale-105">
+
+        <button
+          onClick={fetchWeather}
+          className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg"
+        >
           Search
         </button>
       </div>
 
-      {search && (
-        <div className=" w-3xl rounded-b-2xl bg-white/10 backdrop-blur-lg text-white shadow-lg max-h-60 overflow-y-auto z-50">
-          {FilteredData.length > 0 ? (
-            FilteredData.map((item, index) => (
+      {(results.length > 0 || loading) && (
+        <div className="w-3xl rounded-b-2xl bg-white/10 text-white max-h-60 overflow-y-auto">
+          {loading ? (
+            <div className="p-4 text-gray-300">Loading...</div>
+          ) : (
+            results.map((item) => (
               <Link
-                href={`/weather/${item.id}`}
-                key={index}
-                className="px-4 py-2 flex gap-5 justify-center  p-5 hover:bg-gray-100 hover:text-gray-600 cursor-pointer transition"
-                onClick={() => setSearch(item.city)}
+                href={`/weather/${item.city}`}
+                key={item.id}
+                className="flex justify-between px-4 py-3 hover:bg-gray-200 hover:text-black"
               >
-                <div className="font-medium">
+                <div>
                   {item.city}, {item.country}
                 </div>
-                <div className="text-sm text-gray-400 ">
-                  <DeviceThermostatIcon
-                    fontSize="small"
-                    className="text-red-300"
-                  />{" "}
+
+                <div className="flex items-center gap-2">
+                  <DeviceThermostatIcon fontSize="small" />
                   {item.temp}°C
                 </div>
               </Link>
             ))
-          ) : (
-            <div className="px-4 py-2 text-gray-500">No results found</div>
           )}
         </div>
       )}
@@ -93,9 +127,9 @@ export default function HomeContent() {
       </div>
       <Link
         href={"/weather"}
-        className="mt-12 px-6 py-3 bg-linear-to-r from-purple-600 to-pink-500 rounded-xl font-semibold shadow-lg hover:scale-105 transition"
+        className="mt-12 px-6 py-3 bg-purple-600 rounded-xl"
       >
-        Weather Forcasting
+        Weather Forecasting
       </Link>
     </div>
   );
