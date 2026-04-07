@@ -1,5 +1,7 @@
+
 export const weatherAPI = [
   {
+    id: 1,
     city: "Kathmandu",
     country: "Nepal",
     temp: 22,
@@ -8,6 +10,7 @@ export const weatherAPI = [
     wind: 10,
   },
   {
+    id: 2,
     city: "Pokhara",
     country: "Nepal",
     temp: 25,
@@ -16,6 +19,7 @@ export const weatherAPI = [
     wind: 8,
   },
   {
+    id: 3,
     city: "Biratnagar",
     country: "Nepal",
     temp: 30,
@@ -24,6 +28,7 @@ export const weatherAPI = [
     wind: 12,
   },
   {
+    id: 4,
     city: "Lalitpur",
     country: "Nepal",
     temp: 21,
@@ -32,6 +37,7 @@ export const weatherAPI = [
     wind: 15,
   },
   {
+    id: 5,
     city: "Bhaktapur",
     country: "Nepal",
     temp: 20,
@@ -39,8 +45,8 @@ export const weatherAPI = [
     humidity: 65,
     wind: 9,
   },
-
   {
+    id: 6,
     city: "Delhi",
     country: "India",
     temp: 35,
@@ -49,6 +55,7 @@ export const weatherAPI = [
     wind: 14,
   },
   {
+    id: 7,
     city: "Mumbai",
     country: "India",
     temp: 32,
@@ -57,6 +64,7 @@ export const weatherAPI = [
     wind: 11,
   },
   {
+    id: 8,
     city: "Bangalore",
     country: "India",
     temp: 27,
@@ -65,6 +73,7 @@ export const weatherAPI = [
     wind: 7,
   },
   {
+    id: 9,
     city: "Chennai",
     country: "India",
     temp: 34,
@@ -72,8 +81,8 @@ export const weatherAPI = [
     humidity: 75,
     wind: 13,
   },
-
   {
+    id: 10,
     city: "New York",
     country: "USA",
     temp: 18,
@@ -82,6 +91,7 @@ export const weatherAPI = [
     wind: 20,
   },
   {
+    id: 11,
     city: "Los Angeles",
     country: "USA",
     temp: 26,
@@ -90,6 +100,7 @@ export const weatherAPI = [
     wind: 6,
   },
   {
+    id: 12,
     city: "Chicago",
     country: "USA",
     temp: 15,
@@ -97,8 +108,8 @@ export const weatherAPI = [
     humidity: 55,
     wind: 18,
   },
-
   {
+    id: 13,
     city: "London",
     country: "UK",
     temp: 16,
@@ -107,6 +118,7 @@ export const weatherAPI = [
     wind: 17,
   },
   {
+    id: 14,
     city: "Paris",
     country: "France",
     temp: 19,
@@ -115,6 +127,7 @@ export const weatherAPI = [
     wind: 10,
   },
   {
+    id: 15,
     city: "Berlin",
     country: "Germany",
     temp: 17,
@@ -122,8 +135,8 @@ export const weatherAPI = [
     humidity: 70,
     wind: 12,
   },
-
   {
+    id: 16,
     city: "Tokyo",
     country: "Japan",
     temp: 23,
@@ -132,6 +145,7 @@ export const weatherAPI = [
     wind: 9,
   },
   {
+    id: 17,
     city: "Seoul",
     country: "South Korea",
     temp: 21,
@@ -140,6 +154,7 @@ export const weatherAPI = [
     wind: 14,
   },
   {
+    id: 18,
     city: "Beijing",
     country: "China",
     temp: 28,
@@ -147,8 +162,8 @@ export const weatherAPI = [
     humidity: 68,
     wind: 16,
   },
-
   {
+    id: 19,
     city: "Sydney",
     country: "Australia",
     temp: 24,
@@ -157,6 +172,7 @@ export const weatherAPI = [
     wind: 8,
   },
   {
+    id: 20,
     city: "Melbourne",
     country: "Australia",
     temp: 20,
