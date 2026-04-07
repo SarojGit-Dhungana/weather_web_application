@@ -2,17 +2,21 @@
 import React from "react";
 import Link from "next/link";
 import AirIcon from "@mui/icons-material/Air";
-import LocationCityIcon from "@mui/icons-material/LocationCity";
 import MapIcon from "@mui/icons-material/Map";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SunnySnowingIcon from "@mui/icons-material/SunnySnowing";
+
 const headerItems = [
   {
     item: "Weather",
     href: "/weather",
     icon: <SunnySnowingIcon fontSize="small" />,
   },
-  { item: "Services", href: "/service", icon: <MapIcon fontSize="small" /> },
+  {
+    item: "Services",
+    href: "/service",
+    icon: <MapIcon fontSize="small" />,
+  },
   {
     item: "Settings",
     href: "/setting",
@@ -22,28 +26,42 @@ const headerItems = [
 
 export default function Header() {
   return (
-    <div className=" h-9/12 w-20 rounded-xl bg-transparent border border-gray-600 shadow-2xl flex flex-col mr-2 py-10">
-      <h1 className="text-center font-semibold">
+    <>
+      <div className="md:hidden w-full flex items-center justify-between px-4 py-3 border-b border-gray-700">
         <Link href={"/"}>
-          <AirIcon fontSize="large" className="text-gray-300 font-bold" />
+          <AirIcon className="text-gray-300" />
         </Link>
-      </h1>
-      <nav className="flex-1 py-4 gap-10">
-        <div className="space-y-1">
+        <div className="flex gap-6">
           {headerItems.map((link) => (
             <Link
               key={link.item}
               href={link.href}
-              className="block py-4 px-3 w-auto text-s
-              m text-blue-50 text-center rounded-lg hover:text-gray-200"
+              className="flex flex-col items-center text-xs text-gray-200"
             >
-              <span>{link.icon}</span>
-              <br />
+              {link.icon}
               {link.item}
             </Link>
           ))}
         </div>
-      </nav>
-    </div>
+      </div>
+
+      <div className="hidden md:flex flex-col h-9/12 w-20 rounded-xl bg-transparent border border-gray-600 shadow-2xl mr-2 py-10 items-center px-10">
+        <Link href={"/"} className="mb-8">
+          <AirIcon fontSize="large" className="text-gray-300" />
+        </Link>
+        <nav className="flex flex-col gap-6">
+          {headerItems.map((link) => (
+            <Link
+              key={link.item}
+              href={link.href}
+              className="flex flex-col items-center text-sm text-gray-200 hover:text-white transition"
+            >
+              {link.icon}
+              <span className="text-xs mt-1">{link.item}</span>
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </>
   );
 }
