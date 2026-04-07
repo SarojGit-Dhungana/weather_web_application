@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { servicesAPI } from "@/fake-data/fake_service_data";
+import { servicesAPI } from "@/fake-data/fake-service";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import StarIcon from "@mui/icons-material/Star";
 import MyLocationIcon from "@mui/icons-material/MyLocation";

@@ -7,17 +7,13 @@ export default function HomeContent() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const fetchWeather = async () => {
     if (!search) return;
-
     setLoading(true);
-
     try {
       const res = await fetch(
         `http://api.weatherapi.com/v1/search.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${search}`,
       );
-
       const cities = await res.json();
       const topCities = cities.slice(0, 10);
       const weatherResults = await Promise.all(
@@ -25,9 +21,7 @@ export default function HomeContent() {
           const weatherRes = await fetch(
             `http://api.weatherapi.com/v1/current.json?key=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}&q=${city.name}`,
           );
-
           const weatherData = await weatherRes.json();
-
           return {
             id: index,
             city: city.name,
@@ -37,16 +31,13 @@ export default function HomeContent() {
           };
         }),
       );
-
       setResults(weatherResults);
     } catch (err) {
       console.error(err);
       alert("Error fetching weather");
     }
-
     setLoading(false);
   };
-
   const cards = [
     {
       title: "Real-time Weather",
@@ -61,7 +52,6 @@ export default function HomeContent() {
       desc: "Visualize weather patterns on the map.",
     },
   ];
-
   return (
     <div className="flex flex-col items-center h-full text-center px-6 w-full">
       <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-100">
@@ -71,8 +61,6 @@ export default function HomeContent() {
       <p className="text-gray-300 max-w-xl mb-10">
         Get real-time weather updates, forecasts, and insights.
       </p>
-
-      {/* SEARCH */}
       <div className="w-3xl rounded-t-2xl bg-white/10 backdrop-blur-lg p-2 flex items-center shadow-lg">
         <input
           type="text"
@@ -81,7 +69,6 @@ export default function HomeContent() {
           onChange={(e) => setSearch(e.target.value)}
           className="flex-1 bg-transparent outline-none px-3 text-white"
         />
-
         <button
           onClick={fetchWeather}
           className="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg"
@@ -89,7 +76,6 @@ export default function HomeContent() {
           Search
         </button>
       </div>
-
       {(results.length > 0 || loading) && (
         <div className="w-3xl rounded-b-2xl bg-white/10 text-white max-h-60 overflow-y-auto">
           {loading ? (
@@ -97,14 +83,13 @@ export default function HomeContent() {
           ) : (
             results.map((item) => (
               <Link
-                href={`/weather/${item.city}`}
+                href={`/weather`}
                 key={item.id}
                 className="flex justify-between px-4 py-3 hover:bg-gray-200 hover:text-black"
               >
                 <div>
                   {item.city}, {item.country}
                 </div>
-
                 <div className="flex items-center gap-2">
                   <DeviceThermostatIcon fontSize="small" />
                   {item.temp}°C

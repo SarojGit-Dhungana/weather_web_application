@@ -2,7 +2,7 @@ import Footer from "@/component/Footer";
 import Header from "@/component/Header";
 import Servicecontent from "@/component/Services/ServiceContent";
 import React from "react";
-function MapPage() {
+function ServicePage() {
   return (
     <div className="flex bg-linear-to-br from-slate-900 via-indigo-900 to-purple-900 text-white p-5">
       <Header />
@@ -15,4 +15,4 @@ function MapPage() {
     </div>
   );
 }
-export default MapPage;
+export default ServicePage;
